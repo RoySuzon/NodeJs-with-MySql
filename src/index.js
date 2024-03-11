@@ -30,6 +30,20 @@ app.get("/users",(req,res)=>{
     })
 
 })
+app.get("/user/:id",(req,res)=>{
+   const id = req.params["id"];
+    const searchByID = `SELECT * FROM Student WHERE id = "${id}"`;
+    
+    db.query(searchByID,(err,data)=>{
+        if(err) return res.status(404).json({
+            status: false,
+            err: err});
+        return res.status(200).json({
+            status: true,
+            students: data});
+    })
+
+})
 
 app.post("/user",express.json(),express.urlencoded({extended:false}),(req,res)=>{
 const name = req.body["name"];
